@@ -27,18 +27,14 @@ initOpenGL(int width, int height, const char* title) {
     return window;
 }
 
-char const*
+const char*
 loadShaderFile(const char* filename) {
     std::string actualFile = SHADER_ROOT + filename;
     std::ifstream in(actualFile.c_str());
-    int fileLen = 0;
-    in.seekg(0, std::ios::end);
-    fileLen = in.tellg();
-    in.seekg(0, std::ios::beg);
-
-    char* buffer = new char[fileLen];
-    in.read(buffer, fileLen);
-    in.close();
-
-    return buffer;
+    std::string str((std::istreambuf_iterator<char>(in)),
+                     std::istreambuf_iterator<char>());
+    char* code = new char[str.size()+1];
+    code[str.size()] = '\0';
+    str.copy(code, str.size());
+    return code;
 }
