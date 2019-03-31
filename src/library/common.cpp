@@ -1,8 +1,5 @@
 #include <common.hpp>
 
-#include <fstream>
-
-
 GLFWwindow*
 initOpenGL(int width, int height, const char* title) {
     glfwInit();
@@ -25,16 +22,4 @@ initOpenGL(int width, int height, const char* title) {
     gladLoadGL();
 
     return window;
-}
-
-const char*
-loadShaderFile(const char* filename) {
-    std::string actualFile = SHADER_ROOT + filename;
-    std::ifstream in(actualFile.c_str());
-    std::string str((std::istreambuf_iterator<char>(in)),
-                     std::istreambuf_iterator<char>());
-    char* code = new char[str.size()+1];
-    code[str.size()] = '\0';
-    str.copy(code, str.size());
-    return code;
 }

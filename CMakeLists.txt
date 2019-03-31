@@ -27,7 +27,6 @@ configure_file (
 
 include_directories(include/
                     vendor/assimp/include/
-                    vendor/bullet/src/
                     vendor/glad/include/
                     vendor/glfw/include/
                     vendor/glm/
@@ -36,6 +35,7 @@ include_directories(include/
 file(GLOB VENDORS_SOURCES vendor/glad/src/glad.c src/vendor/*.cpp)
 file(GLOB PROJECT_HEADERS include/*.hpp)
 file(GLOB PROJECT_SOURCES src/*.cpp)
+file(GLOB LIBRARY_SOURCES src/library/*.cpp)
 file(GLOB PROJECT_SHADERS shaders/*.comp
                           shaders/*.frag
                           shaders/*.geom
@@ -48,6 +48,7 @@ file(GLOB PROJECT_CONFIGS CMakeLists.txt
 source_group("Headers" FILES ${PROJECT_HEADERS})
 source_group("Shaders" FILES ${PROJECT_SHADERS})
 source_group("Sources" FILES ${PROJECT_SOURCES})
+source_group("Library" FILES ${LIBRARY_SOURCES})
 source_group("Vendors" FILES ${VENDORS_SOURCES})
 
 add_definitions(-DGLFW_INCLUDE_NONE
@@ -56,7 +57,7 @@ foreach(PROJECT_SOURCE_FILE ${PROJECT_SOURCES})
     get_filename_component(SRC_NAME ${PROJECT_SOURCE_FILE} NAME_WE)
     add_executable(${SRC_NAME} ${PROJECT_SOURCE_FILE} ${PROJECT_HEADERS}
                                ${PROJECT_SHADERS} ${PROJECT_CONFIGS}
-                               ${VENDORS_SOURCES})
+                               ${LIBRARY_SOURCES} ${VENDORS_SOURCES})
     target_link_libraries(${SRC_NAME} assimp glfw
                           ${GLFW_LIBRARIES} ${GLAD_LIBRARIES})
     #set_target_properties(${SRC_NAME} PROPERTIES

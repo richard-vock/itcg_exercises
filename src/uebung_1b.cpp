@@ -1,5 +1,6 @@
 // Local Headers
 #include "common.hpp"
+#include "shader.hpp"
 
 const int WINDOW_WIDTH = 1280;
 const int WINDOW_HEIGHT = 800;

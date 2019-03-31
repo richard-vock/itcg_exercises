@@ -19,6 +19,3 @@
 
 GLFWwindow*
 initOpenGL(int width, int height, const char* title);
-
-const char*
-loadShaderFile(const char* filename);
