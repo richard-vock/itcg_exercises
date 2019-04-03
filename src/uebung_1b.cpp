@@ -1,8 +1,7 @@
-// Local Headers
 #include "common.hpp"
 #include "shader.hpp"
 
-const int WINDOW_WIDTH = 1280;
+const int WINDOW_WIDTH =  800;
 const int WINDOW_HEIGHT = 800;
 
 // called whenever the window gets resized
@@ -12,7 +11,7 @@ resizeCallback(GLFWwindow* window, int width, int height);
 // loads a shader source file, tries to compile the shader
 // and checks for compilation errors
 unsigned int
-compileShader(const char* filename, unsigned int type);
+compileShaderHelper(const char* filename, unsigned int type);
 
 // checks linked program for linker errors
 bool
@@ -24,8 +23,8 @@ main(int, char* argv[]) {
     glfwSetFramebufferSizeCallback(window, resizeCallback);
 
     // load and compile shaders
-    unsigned int vertexShader = compileShader("uebung_1b.vert", GL_VERTEX_SHADER);
-    unsigned int fragmentShader = compileShader("uebung_1b.frag", GL_FRAGMENT_SHADER);
+    unsigned int vertexShader = compileShaderHelper("uebung_1b.vert", GL_VERTEX_SHADER);
+    unsigned int fragmentShader = compileShaderHelper("uebung_1b.frag", GL_FRAGMENT_SHADER);
 
     // create and link program
     unsigned int shaderProgram;
@@ -42,9 +41,9 @@ main(int, char* argv[]) {
 
     // vertex data
     float vertices[] = {
-    -0.5f, -0.5f, 0.0f,
-     0.5f, -0.5f, 0.0f,
-     0.0f,  0.5f, 0.0f
+        -0.5f, -0.5f, 0.0f,
+         0.5f, -0.5f, 0.0f,
+         0.0f,  0.5f, 0.0f
     };
 
     unsigned int VAO;
@@ -88,12 +87,11 @@ void resizeCallback(GLFWwindow*, int width, int height)
 }
 
 unsigned int
-compileShader(const char* filename, unsigned int type) {
+compileShaderHelper(const char* filename, unsigned int type) {
     const char* shaderSource = loadShaderFile(filename);
 
     // create shader object
-    unsigned int shader;
-    shader = glCreateShader(type);
+    unsigned int shader = glCreateShader(type);
     glShaderSource(shader, 1, &shaderSource, NULL);
     // try to compile
     glCompileShader(shader);

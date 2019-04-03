@@ -1,3 +1,5 @@
 include/config.hpp
 compile_commands.json
 build/
+src/solution*
+CMakeFiles*

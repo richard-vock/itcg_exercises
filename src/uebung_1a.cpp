@@ -1,18 +1,17 @@
-// Local Headers
 #include "common.hpp"
 
-const int WINDOW_WIDTH = 1280;
+const int WINDOW_WIDTH =  800;
 const int WINDOW_HEIGHT = 800;
 
 void resize_callback(GLFWwindow* window, int width, int height);
 
 int main(int, char* argv[]) {
     glfwInit();
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 #ifdef __APPLE__
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // uncomment this statement to fix compilation on OS X
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
     GLFWwindow* window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, argv[0], nullptr, nullptr);
 
@@ -24,10 +23,11 @@ int main(int, char* argv[]) {
 
     // create context and load OpenGL functions
     glfwMakeContextCurrent(window);
+    glfwSetFramebufferSizeCallback(window, resize_callback);
+
     gladLoadGL();
     fprintf(stdout, "OpenGL %s\n", glGetString(GL_VERSION));
 
-    glfwSetFramebufferSizeCallback(window, resize_callback);
 
     // rendering loop
     while (glfwWindowShouldClose(window) == false) {
@@ -47,8 +47,7 @@ int main(int, char* argv[]) {
     glfwTerminate();
 }
 
-void resize_callback(GLFWwindow*, int width, int height)
-{
+void resize_callback(GLFWwindow*, int width, int height) {
     // set new width and height as viewport size
     glViewport(0, 0, width, height);
 }
